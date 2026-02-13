@@ -5,14 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0">
     <title>Unity Web Player | Desafios Do Conhecimento HTML</title>
-
     <style>
         html, body {
             margin: 0;
             height: 100%;
             background: url('Build/background.png');
+            background-size: cover;
         }
-        /* FIX: center using a wrapper instead of position:fixed on the canvas */
         #unity-wrapper {
             width: 100vw;
             height: 100vh;
@@ -20,7 +19,6 @@
             align-items: center;
             justify-content: center;
         }
-
         #unity-canvas {
             display: block;
             background: #000;
@@ -29,7 +27,7 @@
 </head>
 
 <body>
-    <!-- FIX: wrapper is what centers the canvas -->
+    <!-- Wrapper is what centers the canvas -->
     <div id="unity-wrapper">
         <canvas id="unity-canvas" width=1920 height=1080 tabindex="-1"></canvas>
     </div>
@@ -61,7 +59,7 @@
       frameworkUrl: "Build/Desafios HTML.framework.js.unityweb",
       codeUrl: "Build/Desafios HTML.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
-      companyName: "DefaultCompany",
+      companyName: "Sesi-RS",
       productName: "Desafios Do Conhecimento HTML",
       productVersion: "1.0",
       matchWebGLToCanvasSize: false,
