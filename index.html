@@ -32,7 +32,7 @@
         <canvas id="unity-canvas" width=1920 height=1080 tabindex="-1"></canvas>
     </div>
 
-    <script src="Build/Desafios HTML.loader.js"></script>
+    <script src="Build/DesafiosdoConhecimentoHTML.loader.js"></script>
     <script>
     const canvas = document.querySelector("#unity-canvas");
     const ASPECT = 16 / 9;
@@ -55,13 +55,13 @@
 
     createUnityInstance(canvas, {
       arguments: [],
-      dataUrl: "Build/Desafios HTML.data.unityweb",
-      frameworkUrl: "Build/Desafios HTML.framework.js.unityweb",
-      codeUrl: "Build/Desafios HTML.wasm.unityweb",
+      dataUrl: "Build/DesafiosdoConhecimentoHTML.data.unityweb",
+      frameworkUrl: "Build/DesafiosdoConhecimentoHTML.framework.js.unityweb",
+      codeUrl: "Build/DesafiosdoConhecimentoHTML.wasm.unityweb",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "Sesi-RS",
       productName: "Desafios Do Conhecimento HTML",
-      productVersion: "1.0",
+      productVersion: "1.0.0",
       matchWebGLToCanvasSize: false,
       //devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
     }).then((unityInstance) => {
