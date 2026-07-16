@@ -5,15 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
     <meta name="viewport"
-          content="width=device-width,
-               height=device-height,
-               initial-scale=1,
-               maximum-scale=1,
-               user-scalable=no,
-               viewport-fit=cover">
+          content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 
     <title>Unity Web Player | Desafios Do Conhecimento HTML</title>
 
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7TE7Q2NDCL"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -30,25 +26,23 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: url('Build/background.png') center center / cover no-repeat;
+            background: url("Build/background.png") center center / cover no-repeat;
             touch-action: none;
             overscroll-behavior: none;
         }
 
         #unity-wrapper {
-            width: 100%;
-            height: 100%;
+            position: fixed;
+            inset: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-            box-sizing: border-box;
+            overflow: hidden;
         }
 
         #unity-canvas {
             display: block;
-            background: black;
-            touch-action: none;
+            background: #000;
         }
     </style>
 </head>
@@ -56,52 +50,48 @@
 <body>
 
     <div id="unity-wrapper">
-        <canvas id="unity-canvas" tabindex="-1"></canvas>
+        <canvas id="unity-canvas"
+                width="1920"
+                height="1080"
+                tabindex="-1">
+        </canvas>
     </div>
 
     <script src="Build/DesafiosDoConhecimento.loader.js"></script>
 
     <script>
 
-        const canvas = document.getElementById("unity-canvas");
+        const canvas = document.querySelector("#unity-canvas");
+
         const ASPECT = 16 / 9;
 
-        const isMobile =
-            /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
-
         function fitCanvas() {
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
+            const viewport = window.visualViewport;
 
-            if (isMobile) {
-                canvas.style.width = vw + "px";
-                canvas.style.height = vh + "px";
+            const vw = viewport ? viewport.width : window.innerWidth;
+            const vh = viewport ? viewport.height : window.innerHeight;
 
-                canvas.width = vw * window.devicePixelRatio;
-                canvas.height = vh * window.devicePixelRatio;
+            let width = vw;
+            let height = width / ASPECT;
+
+            if (height > vh) {
+                height = vh;
+                width = height * ASPECT;
             }
-            else {
-                let w = vw;
-                let h = vw / ASPECT;
 
-                if (h > vh) {
-                    h = vh;
-                    w = vh * ASPECT;
-                }
-
-                canvas.style.width = Math.floor(w) + "px";
-                canvas.style.height = Math.floor(h) + "px";
-            }
+            canvas.style.width = width + "px";
+            canvas.style.height = height + "px";
         }
 
         window.addEventListener("resize", fitCanvas);
+
         window.addEventListener("orientationchange", () => {
-            setTimeout(fitCanvas, 200);
+            setTimeout(fitCanvas, 100);
         });
 
-        document.body.addEventListener("touchmove", e => {
-            e.preventDefault();
-        }, { passive: false });
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener("resize", fitCanvas);
+        }
 
         fitCanvas();
 
@@ -111,20 +101,18 @@
                 dataUrl: "Build/DesafiosDoConhecimento.data.unityweb",
                 frameworkUrl: "Build/DesafiosDoConhecimento.framework.js.unityweb",
                 codeUrl: "Build/DesafiosDoConhecimento.wasm.unityweb",
-
                 streamingAssetsUrl: "StreamingAssets",
-
                 companyName: "Sesi-RS",
                 productName: "Desafios Do Conhecimento HTML",
                 productVersion: "1.0.0",
 
-                matchWebGLToCanvasSize: true,
+                matchWebGLToCanvasSize: true
 
-                devicePixelRatio: isMobile ? window.devicePixelRatio : 1
-
-            }).then((unityInstance) => {
-
-            }).catch((message) => {
+            })
+            .then((unityInstance) => {
+                fitCanvas();
+            })
+            .catch((message) => {
                 alert(message);
             });
 
