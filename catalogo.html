@@ -198,8 +198,11 @@ noscript { display: block; margin: 30px; color: #fff; }
 
     // Theme images and fonts are embedded by the exporter from the existing Unity assets.
     document.documentElement.style.setProperty("--game-background", `url("${data.theme.background}")`);
-    byId("home-art").src = data.theme.home;
-    byId("brand-art").src = data.theme.brand;
+    // Header artwork is optional so the HTML can omit or comment out these images.
+    const homeArt = byId("home-art");
+    if (homeArt) homeArt.src = data.theme.home;
+    const brandArt = byId("brand-art");
+    if (brandArt) brandArt.src = data.theme.brand;
     document.querySelectorAll(".star").forEach(star => { star.src = data.theme.star; });
 
     function element(tag, className, text) {
